@@ -12,4 +12,11 @@ const port = process.env.PORT || 3000; // this can be very useful if you deploy 
 //   .then(() => {
 //     console.log('db synced')
 //   })
-app.listen(port, () => console.log(`listening on port ${port}`))
+
+const socketio = require('socket.io')
+
+const server = app.listen(port, () => console.log(`listening on port ${port}`))
+// set up our socket control center
+//IMPORTANT: Be sure to add this line below after const server = app.listen...
+  const io = socketio(server)
+  require('./server/socket')(io)
