@@ -5,6 +5,17 @@ const path = require('path')
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
+const Sequelize = require('sequelize')
+const session = require('express-session')
+const passport = require('passport')
+const SequelizeStore = require('connect-session-sequelize')(session.Store)
+const db = require('./db');
+
+const sequelize = new Sequelize('database', 'username', 'password', {
+  host: 'localhost',
+  dialect:'postgres',
+});
+const sessionStore = new SequelizeStore({ db : sequelize })
 //loging middleware 
 app.use(morgan('dev'));
 
@@ -12,6 +23,24 @@ app.use(morgan('dev'));
 //body parsing middleware if you want to use it in req.body
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+
+//session middleware with passport
+
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET || 'my best friend is Cody',
+    store: sessionStore,
+    resave: false,
+    saveUninitialized: false
+  })
+)
+app.use(passport.initialize())
+app.use(passport.session())
+
+// auth and api routes
+//app.use('/auth', require('./auth'))
+app.use('/api', require('./api'))
+
 
 //static middleware 
 app.use(express.static(path.join(__dirname, '../public')))

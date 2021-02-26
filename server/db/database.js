@@ -8,7 +8,6 @@ This is why it's often a good idea for the instance of sequelize to be created i
 
 const Sequelize = require('sequelize')
 const pkg = require('../../package.json')
-
 // We'll need to reset the database many times while we're testing, and
 // it'd be a major bummer if we lost all of the data that we made while
 // playing aound with the app in the browser. We'll check to see if the node
