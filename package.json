@@ -6,7 +6,8 @@
   "scripts": {
     "start": "node server",
     "start-dev": "webpack -w & nodemon main.js",
-    "test": "NODE_ENV='test' mocha  ./tests --recursive --watch --require babel-polyfill --require babel-register"
+    "test": "NODE_ENV='test' mocha  ./tests --recursive --watch --require babel-polyfill --require babel-register",
+    "seed": "node script/seed.js"
   },
   "keywords": [],
   "author": "",
